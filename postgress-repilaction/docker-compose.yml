@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # 1. Master PostgreSQL Node
+  pg-master:
+    image: postgres:16-alpine
+    container_name: pg-master
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
+    command: >
+      postgres
+      -c wal_level=replica
+      -c max_wal_senders=10
+      -c wal_keep_size=1024MB
+      -c listen_addresses='*'
+    volumes:
+      - shared-data:/shared
+
+  # 2. Empty container to act as the Replica Node
+  pg-replica:
+    image: postgres:16-alpine
+    container_name: pg-replica
+    ports:
+      - "5433:5432"
+    environment:
+      PGPASSWORD: mypassword
+    volumes:
+      - shared-data:/shared
+    # Overwrite default command so it keeps running without a running DB initialized
+    entrypoint: ["tail", "-f", "/dev/null"]
+
+volumes:
+  shared-data:
+
