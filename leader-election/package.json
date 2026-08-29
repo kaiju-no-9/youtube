@@ -1,0 +1,20 @@
+{
+  "name": "ts-leader-election",
+  "version": "1.0.0",
+  "description": "Leader election algorithm in TypeScript with Node.js worker threads, self-killing master thread, and dynamic worker spin-up",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/demo.ts",
+    "test": "vitest run"
+  },
+  "keywords": ["leader-election", "bully-algorithm", "distributed-systems", "typescript", "worker-threads"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.1",
+    "vitest": "^1.2.2"
+  }
+}
